@@ -1,8 +1,10 @@
-import './app.css';
-import App from './App.svelte';
+import Widget from './lib/Widget.svelte';
 
-const app = new App({
-	target: document.getElementById('app')!,
-});
+// import './app.css';
+// import App from './App.svelte';
 
-export default app;
+// const app = new App({
+// 	target: document.getElementById('app')!,
+// });
+
+// export default app;
