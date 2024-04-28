@@ -15,16 +15,41 @@
 
 <svelte:window bind:innerHeight={windowHeight} />
 
-<div
-	class:hidden={!$chatIsOpen}
-	class="fixed bottom-16 right-2 drop-shadow-sm rounded-md mb-2 overflow-hidden flex justify-end left-2 md:left-auto"
->
-	<iframe
-		{src}
-		frameborder="0"
-		scrolling="no"
-		title="chat widget"
-		style:height
-		class="overflow-hidden w-full min-h-[60vh] md:w-[400px]"
-	></iframe>
+<div class:hidden={!$chatIsOpen}>
+	<iframe {src} frameborder="0" scrolling="no" title="chat widget" style:height></iframe>
 </div>
+
+<style>
+	div {
+		position: fixed;
+		bottom: 4.5rem;
+		left: 0.5rem;
+		right: 0.5rem;
+		overflow: hidden;
+		display: flex;
+		justify-content: flex-end;
+		border-radius: 0.5rem;
+		box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+		transition: all 0.3s;
+	}
+
+	div iframe {
+		overflow: hidden;
+		width: 100%;
+		min-height: 60vh;
+	}
+
+	.hidden {
+		display: none;
+	}
+
+	@media (min-width: 768px) {
+		div {
+			left: auto;
+		}
+
+		div iframe {
+			width: 400px;
+		}
+	}
+</style>

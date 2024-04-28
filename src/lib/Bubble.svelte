@@ -12,11 +12,23 @@
 	}
 </script>
 
-<div bind:offsetHeight={$bubbleHeight} class="fixed bottom-2 right-2 text-right">
-	<button
-		on:click={handleClick}
-		style:background={bg}
-		style:color={fg}
-		class="relative rounded-full px-8 py-4 drop-shadow-sm">{btnText}</button
-	>
+<div bind:offsetHeight={$bubbleHeight}>
+	<button on:click={handleClick} style:background={bg} style:color={fg}>{btnText}</button>
 </div>
+
+<style>
+	div {
+		position: fixed;
+		bottom: 0.5rem;
+		right: 0.5rem;
+		text-align: right;
+		transition: all 0.3s;
+	}
+
+	div > button {
+		position: relative;
+		border-radius: 100rem;
+		padding: 1rem 2rem;
+		box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+	}
+</style>

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import './app.css';
 	import Widget from './lib/Widget.svelte';
 </script>
 
