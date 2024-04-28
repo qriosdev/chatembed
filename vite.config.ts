@@ -7,7 +7,7 @@ export default defineConfig({
 		lib: {
 			entry: 'src/main.ts',
 			name: 'ChatWidget',
-			fileName: 'widget',
+			fileName: 'qcw',
 			formats: ['iife'],
 		},
 		// outDir: 'build',
