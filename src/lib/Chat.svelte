@@ -7,7 +7,7 @@
 	const src = `${host}${id}`;
 
 	$: windowHeight = 0;
-	$: height = windowHeight < 1000 ? windowHeight - $bubbleHeight - 25 + 'px' : '60vh';
+	$: height = windowHeight < 1000 ? windowHeight - $bubbleHeight - 25 + 'px' : '65vh';
 </script>
 
 <svelte:window bind:innerHeight={windowHeight} />
@@ -19,7 +19,7 @@
 <style>
 	div {
 		position: fixed;
-		bottom: 4.5rem;
+		bottom: 4rem;
 		left: 0.5rem;
 		right: 0.5rem;
 		overflow: hidden;
@@ -33,7 +33,7 @@
 	div iframe {
 		overflow: hidden;
 		width: 100%;
-		min-height: 60vh;
+		min-height: 65vh;
 	}
 
 	.hidden {

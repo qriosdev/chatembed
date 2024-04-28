@@ -13,7 +13,9 @@
 </script>
 
 <div bind:offsetHeight={$bubbleHeight}>
-	<button on:click={handleClick} style:background={bg} style:color={fg}>{btnText}</button>
+	<button on:click={handleClick} style:background={bg} style:color={fg} aria-label={btnText}
+		>{btnText}</button
+	>
 </div>
 
 <style>
@@ -33,9 +35,10 @@
 		box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
 		font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
 			'Segoe UI Symbol', 'Noto Color Emoji';
-		font-size: 16px;
+		font-size: 15px;
 		font-weight: 500;
 		border: none;
 		outline: none;
+		cursor: pointer;
 	}
 </style>
