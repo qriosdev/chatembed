@@ -7,9 +7,6 @@
 	const src = `${host}${id}`;
 
 	$: windowHeight = 0;
-
-	$: console.log(windowHeight);
-
 	$: height = windowHeight < 1000 ? windowHeight - $bubbleHeight - 25 + 'px' : '60vh';
 </script>
 
