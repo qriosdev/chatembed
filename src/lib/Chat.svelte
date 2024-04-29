@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { chatIsOpen, bubbleHeight } from './store';
 
-	export let host = '';
+	export let host = 'https://qriosai.com/embed/';
 	export let id = '';
 
 	const src = `${host}${id}`;
