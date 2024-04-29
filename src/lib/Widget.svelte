@@ -7,7 +7,7 @@
 	export let text = 'Have questions?';
 	export let bg = '#000000';
 	export let fg = '#ffffff';
-	export let host = '';
+	export let host = 'https://qriosai.com/embed/';
 	export let id = '';
 </script>
 
