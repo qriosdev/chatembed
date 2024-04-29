@@ -25,7 +25,7 @@
 		right: 0.5rem;
 		text-align: right;
 		transition: all 0.3s;
-		z-index: 99999;
+		z-index: 99998;
 	}
 
 	div > button {

@@ -7,12 +7,12 @@
 	const src = `${host}${id}`;
 
 	$: windowHeight = 0;
-	$: height = windowHeight < 1000 ? windowHeight - $bubbleHeight - 25 + 'px' : '65vh';
+	$: height = windowHeight < 900 ? windowHeight - $bubbleHeight - 25 + 'px' : '65vh';
 </script>
 
 <svelte:window bind:innerHeight={windowHeight} />
 
-<div class:hidden={!$chatIsOpen}>
+<div class:sr-only={!$chatIsOpen}>
 	<iframe {src} frameborder="0" scrolling="no" title="chat widget" style:height></iframe>
 </div>
 
@@ -28,6 +28,7 @@
 		border-radius: 0.5rem;
 		box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
 		transition: all 0.3s;
+		z-index: 99999;
 	}
 
 	div iframe {
@@ -36,8 +37,18 @@
 		min-height: 65vh;
 	}
 
-	.hidden {
-		display: none;
+	.sr-only {
+		border: 0 !important;
+		clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */
+		-webkit-clip-path: inset(50%) !important;
+		clip-path: inset(50%) !important; /* 2 */
+		height: 1px !important;
+		margin: -1px !important;
+		overflow: hidden !important;
+		padding: 0 !important;
+		position: absolute !important;
+		width: 1px !important;
+		white-space: nowrap !important; /* 3 */
 	}
 
 	@media (min-width: 768px) {
