@@ -1,19 +1,44 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { chatIsOpen, bubbleHeight } from './store';
 
 	export let host = 'https://qriosai.com/embed/';
-	export let id = '';
+	export let id: string;
+	export let htext: string;
+	export let bg: string;
+	export let fg: string;
 
 	const src = `${host}${id}`;
+	const childFrame = 'https://qriosai.com';
+
+	let iframe: HTMLIFrameElement;
 
 	$: windowHeight = 0;
 	$: height = windowHeight < 900 ? windowHeight - $bubbleHeight - 25 + 'px' : '65vh';
+
+	onMount(() => {
+		window.addEventListener('message', (event): void => {
+			if (event.origin !== childFrame) return;
+			if (typeof event.data !== 'string') return;
+
+			if (iframe.contentWindow && event.data === 'req') {
+				const data = {
+					url: window.location.href,
+					bg,
+					fg,
+					htext,
+				};
+				iframe.contentWindow.postMessage(JSON.stringify(data), childFrame);
+			}
+		});
+	});
 </script>
 
 <svelte:window bind:innerHeight={windowHeight} />
 
 <div class:hidden={!$chatIsOpen}>
-	<iframe {src} frameborder="0" scrolling="no" title="chat widget" style:height></iframe>
+	<iframe bind:this={iframe} {src} frameborder="0" scrolling="no" title="chat widget" style:height
+	></iframe>
 </div>
 
 <style>
