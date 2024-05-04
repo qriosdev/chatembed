@@ -2,14 +2,13 @@
 	import { onMount } from 'svelte';
 	import { chatIsOpen, bubbleHeight } from './store';
 
-	export let host = 'https://qriosai.com/embed/';
+	export let host = 'https://qriosai.com';
 	export let id: string;
 	export let htext: string;
 	export let bg: string;
 	export let fg: string;
 
-	const src = `${host}${id}`;
-	const childFrame = 'https://qriosai.com';
+	const src = `${host}/embed/${id}`;
 
 	let iframe: HTMLIFrameElement;
 
@@ -18,7 +17,7 @@
 
 	onMount(() => {
 		window.addEventListener('message', (event): void => {
-			if (event.origin !== childFrame) return;
+			if (event.origin !== host) return;
 			if (typeof event.data !== 'string') return;
 
 			if (iframe.contentWindow && event.data === 'req') {
@@ -28,7 +27,7 @@
 					fg,
 					htext,
 				};
-				iframe.contentWindow.postMessage(JSON.stringify(data), childFrame);
+				iframe.contentWindow.postMessage(JSON.stringify(data), host);
 			}
 		});
 	});
