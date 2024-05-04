@@ -20,7 +20,7 @@
 			if (event.origin !== host) return;
 			if (typeof event.data !== 'string') return;
 
-			if (iframe.contentWindow && event.data === 'req') {
+			if (iframe.contentWindow && event.data === 'qchat_init') {
 				const data = {
 					url: window.location.href,
 					bg,
@@ -35,7 +35,6 @@
 				window.dataLayer = window.dataLayer || [];
 				// @ts-ignore
 				window.dataLayer.push({ event: event.data });
-				console.log('qchat_started');
 			}
 		});
 	});
