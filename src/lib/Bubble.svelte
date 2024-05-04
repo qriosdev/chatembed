@@ -33,10 +33,9 @@
 		border-radius: 100rem;
 		padding: 1rem 2rem;
 		box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
-		font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-			'Segoe UI Symbol', 'Noto Color Emoji';
+		font-family: inherit;
 		font-size: 15px;
-		font-weight: 500;
+		font-weight: 600;
 		border: none;
 		outline: none;
 		cursor: pointer;
