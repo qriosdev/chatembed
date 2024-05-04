@@ -29,6 +29,14 @@
 				};
 				iframe.contentWindow.postMessage(JSON.stringify(data), host);
 			}
+
+			if (event.data === 'qchat_started') {
+				// @ts-ignore
+				window.dataLayer = window.dataLayer || [];
+				// @ts-ignore
+				window.dataLayer.push({ event: event.data });
+				console.log('qchat_started');
+			}
 		});
 	});
 </script>
