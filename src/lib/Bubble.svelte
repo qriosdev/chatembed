@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { chatIsOpen, bubbleHeight } from './store';
 
-	export let text = 'Have questions?';
+	export let btext = 'Have questions?';
 	export let bg = '#000000';
 	export let fg = '#ffffff';
 
-	$: btnText = $chatIsOpen ? 'Close' : text;
+	$: btnText = $chatIsOpen ? 'Close' : btext;
 
 	function handleClick() {
 		$chatIsOpen = !$chatIsOpen;
@@ -13,9 +13,9 @@
 </script>
 
 <div bind:offsetHeight={$bubbleHeight}>
-	<button on:click={handleClick} style:background={bg} style:color={fg} aria-label={btnText}
-		>{btnText}</button
-	>
+	<button on:click={handleClick} style:background={bg} style:color={fg} aria-label={btnText}>
+		{btnText}
+	</button>
 </div>
 
 <style>

@@ -4,7 +4,7 @@
 	import Bubble from './Bubble.svelte';
 	import Chat from './Chat.svelte';
 
-	export let text: string;
+	export let btext: string;
 	export let htext: string;
 	export let bg: string;
 	export let fg: string;
@@ -13,4 +13,4 @@
 </script>
 
 <Chat {host} {id} {htext} {bg} {fg} />
-<Bubble {text} {bg} {fg} />
+<Bubble {btext} {bg} {fg} />
