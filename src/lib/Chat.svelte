@@ -43,7 +43,13 @@
 <svelte:window bind:innerHeight={windowHeight} />
 
 <div class:hidden={!$chatIsOpen}>
-	<iframe bind:this={iframe} {src} frameborder="0" scrolling="no" title="chat widget" style:height
+	<iframe
+		bind:this={iframe}
+		{src}
+		frameborder="0"
+		scrolling="no"
+		title="chat widget"
+		style:height
 	></iframe>
 </div>
 
