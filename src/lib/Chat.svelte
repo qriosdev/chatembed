@@ -16,19 +16,22 @@
 	$: height = windowHeight < 900 ? windowHeight - $bubbleHeight - 25 + 'px' : '65vh';
 
 	onMount(() => {
-		window.addEventListener('message', (event): void => {
-			if (event.origin !== host) return;
-			if (typeof event.data !== 'string') return;
-
-			if (iframe.contentWindow && event.data === 'qchat_init') {
+		iframe.onload = () => {
+			if (iframe.contentWindow) {
 				const data = {
 					url: window.location.href,
 					bg,
 					fg,
 					htext,
 				};
-				iframe.contentWindow.postMessage(JSON.stringify(data), host);
+
+				iframe.contentWindow.postMessage(JSON.stringify(data), '*');
 			}
+		};
+
+		window.addEventListener('message', (event): void => {
+			if (event.origin !== host) return;
+			if (typeof event.data !== 'string') return;
 
 			if (event.data === 'qchat_started') {
 				// @ts-ignore
