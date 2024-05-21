@@ -21,8 +21,8 @@
 <style>
 	div {
 		position: fixed;
-		bottom: 0.5rem;
-		right: 0.5rem;
+		bottom: 1rem;
+		right: 1rem;
 		text-align: right;
 		transition: all 0.3s;
 		z-index: 99998;

@@ -58,13 +58,13 @@
 	div {
 		position: fixed;
 		bottom: 4rem;
-		left: 0.5rem;
-		right: 0.5rem;
+		left: 1rem;
+		right: 1rem;
 		overflow: hidden;
 		display: flex;
 		justify-content: flex-end;
 		border-radius: 0.5rem;
-		box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+		box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.15);
 		transition: all 0.3s;
 		z-index: 99999;
 	}
