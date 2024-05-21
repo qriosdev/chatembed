@@ -57,9 +57,9 @@
 <style>
 	div {
 		position: fixed;
-		bottom: 4rem;
-		left: 1rem;
-		right: 1rem;
+		bottom: 4.2rem;
+		left: 0.6rem;
+		right: 0.6rem;
 		overflow: hidden;
 		display: flex;
 		justify-content: flex-end;
