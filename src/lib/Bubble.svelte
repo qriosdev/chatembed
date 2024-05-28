@@ -36,7 +36,7 @@
 		font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
 			'Segoe UI Symbol', 'Noto Color Emoji';
 		font-size: 15px;
-		font-weight: 600;
+		font-weight: 800;
 		border: none;
 		outline: none;
 		cursor: pointer;
