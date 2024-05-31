@@ -64,7 +64,6 @@
 
 			if (data.event === 'qcsid') {
 				setCookie('qcsid', data.qcsid, 4);
-				console.log('setting qcsid in parent');
 			}
 		});
 
