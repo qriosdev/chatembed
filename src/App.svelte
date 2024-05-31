@@ -5,7 +5,7 @@
 <section>SECTION #1</section>
 <section>SECTION #2</section>
 
-<Widget host="http://localhost:5173" id="123" />
+<Widget host="http://localhost:5173" id="95fbf08e-16a1-4ecd-984b-a6b65d5429c3" />
 
 <style>
 	section {

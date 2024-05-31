@@ -8,51 +8,84 @@
 	export let bg: string;
 	export let fg: string;
 
-	const src = `${host}/embed/${id}`;
-
+	let src = `${host}/embed/${id}`;
 	let iframe: HTMLIFrameElement;
+	let loaded = false;
 
 	$: windowHeight = 0;
 	$: height = windowHeight < 900 ? windowHeight - $bubbleHeight - 25 + 'px' : '65vh';
 
-	onMount(() => {
-		window.addEventListener('message', (event): void => {
-			if (event.origin !== host) return;
-			if (typeof event.data !== 'string') return;
+	function getCookie(name: string) {
+		const cookieArr = document.cookie.split(';');
+		for (let i = 0; i < cookieArr.length; i++) {
+			const cookiePair = cookieArr[i].split('=');
+			if (name == cookiePair[0].trim()) {
+				return decodeURIComponent(cookiePair[1]);
+			}
+		}
+		return null;
+	}
 
-			if (iframe.contentWindow && event.data === 'qchat_init') {
-				const data = {
+	function setCookie(name: string, value: string, hours: number) {
+		let maxAge = '';
+		if (hours) maxAge = '; max-age=' + hours * 60 * 60;
+		document.cookie = name + '=' + (value || '') + maxAge + '; path=/';
+	}
+
+	onMount(() => {
+		const qcsid = getCookie('qcsid');
+		if (qcsid) {
+			src += `?cid=${qcsid}`;
+		}
+
+		window.addEventListener('message', (e): void => {
+			if (e.origin !== host) return;
+			if (typeof e.data !== 'string') return;
+
+			const data = JSON.parse(e.data);
+
+			if (iframe.contentWindow && data.event === 'qchat_init') {
+				const payload = {
 					url: window.location.href,
 					bg,
 					fg,
 					htext,
 				};
 
-				iframe.contentWindow.postMessage(JSON.stringify(data), '*');
+				iframe.contentWindow.postMessage(JSON.stringify(payload), '*');
 			}
 
-			if (event.data === 'qchat_started') {
+			if (data.event === 'qchat_started') {
 				// @ts-ignore
 				window.dataLayer = window.dataLayer || [];
 				// @ts-ignore
-				window.dataLayer.push({ event: event.data });
+				window.dataLayer.push({ event: data.event });
+			}
+
+			if (data.event === 'qcsid') {
+				setCookie('qcsid', data.qcsid, 4);
+				console.log('setting qcsid in parent');
 			}
 		});
+
+		loaded = true;
 	});
 </script>
 
 <svelte:window bind:innerHeight={windowHeight} />
 
-<div class:hidden={!$chatIsOpen}>
-	<iframe
-		bind:this={iframe}
-		{src}
-		frameborder="0"
-		scrolling="no"
-		title="chat widget"
-		style:height
-	></iframe>
-</div>
+{#if loaded}
+	<div class:hidden={!$chatIsOpen}>
+		<iframe
+			bind:this={iframe}
+			{src}
+			frameborder="0"
+			scrolling="no"
+			title="chat widget"
+			style:height
+		></iframe>
+	</div>
+{/if}
 
 <style>
 	div {
