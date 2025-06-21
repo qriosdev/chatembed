@@ -3,7 +3,7 @@
 	import { store } from './store.svelte';
 
 	let {
-		host,
+		host = 'https://qriosai.com',
 		id,
 		htext,
 		bg,
