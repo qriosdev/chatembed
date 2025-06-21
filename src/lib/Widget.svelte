@@ -4,12 +4,7 @@
 	import Bubble from './Bubble.svelte';
 	import Chat from './Chat.svelte';
 
-	export let btext: string;
-	export let htext: string;
-	export let bg: string;
-	export let fg: string;
-	export let host: string;
-	export let id: string;
+	let { btext, htext, bg, fg, host, id } = $props();
 </script>
 
 <Chat {host} {id} {htext} {bg} {fg} />

@@ -1,19 +1,25 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { chatIsOpen, bubbleHeight } from './store';
+	import { store } from './store.svelte';
 
-	export let host = 'https://qriosai.com';
-	export let id: string;
-	export let htext: string;
-	export let bg: string;
-	export let fg: string;
+	let {
+		host,
+		id,
+		htext,
+		bg,
+		fg
+	} = $props();
 
-	let src = `${host}/embed/${id}`;
-	let iframe: HTMLIFrameElement;
-	let loaded = false;
+	let src = $state(`${host}/api/assistant/${id}/embed`);
+	let iframe = $state<HTMLIFrameElement>();
+	let loaded = $state(false);
+	let windowHeight = $state(0);
 
-	$: windowHeight = 0;
-	$: height = windowHeight < 900 ? windowHeight - $bubbleHeight - 25 + 'px' : '65vh';
+	const height = $derived(
+		windowHeight < 900
+			? windowHeight - store.bubbleHeight - 25 + 'px'
+			: '65vh'
+	);
 
 	function getCookie(name: string) {
 		const cookieArr = document.cookie.split(';');
@@ -32,56 +38,71 @@
 		document.cookie = name + '=' + (value || '') + maxAge + '; path=/';
 	}
 
-	onMount(() => {
-		const qcsid = getCookie('qcsid');
-		if (qcsid) {
-			src += `?cid=${qcsid}`;
+	function handleMessage(e: MessageEvent) {
+		if (e.origin !== host) return;
+		if (typeof e.data !== 'string') return;
+
+		const data = JSON.parse(e.data);
+
+		if (iframe?.contentWindow && data.event === 'qchat_init') {
+			const payload = {
+				url: window.location.href,
+				bg,
+				fg,
+				htext,
+			};
+
+			iframe?.contentWindow?.postMessage(JSON.stringify(payload), '*');
+			store.ready = true;
 		}
 
-		window.addEventListener('message', (e): void => {
-			if (e.origin !== host) return;
-			if (typeof e.data !== 'string') return;
+		if (data.event === 'qchat_started') {
+			// @ts-ignore
+			window.dataLayer = window.dataLayer || [];
+			// @ts-ignore
+			window.dataLayer.push({ event: data.event });
+		}
 
-			const data = JSON.parse(e.data);
+		if (data.event === 'qchat_close') {
+			store.chatIsOpen = false;
+		}
 
-			if (iframe.contentWindow && data.event === 'qchat_init') {
-				const payload = {
-					url: window.location.href,
-					bg,
-					fg,
-					htext,
-				};
+		// if (data.event === 'qcsid') {
+		// 	setCookie('qcsid', data.qcsid, 4);
+		// }
+	}
 
-				iframe.contentWindow.postMessage(JSON.stringify(payload), '*');
-			}
+	onMount(() => {
+		const qcsid = getCookie('qcsid');
+	
+		if (qcsid) {
+			src += `?sid=${qcsid}`;
+		} else {
+			const uid = crypto.randomUUID();
+			setCookie('qcsid', uid, 4);
+			src += `?sid=${uid}`;
+		}
 
-			if (data.event === 'qchat_started') {
-				// @ts-ignore
-				window.dataLayer = window.dataLayer || [];
-				// @ts-ignore
-				window.dataLayer.push({ event: data.event });
-			}
-
-			if (data.event === 'qcsid') {
-				setCookie('qcsid', data.qcsid, 4);
-			}
-		});
-
+		window.addEventListener('message', handleMessage);
 		loaded = true;
+
+		return () => {
+			window.removeEventListener('message', handleMessage);
+		};
 	});
 </script>
 
 <svelte:window bind:innerHeight={windowHeight} />
 
 {#if loaded}
-	<div class:hidden={!$chatIsOpen}>
+	<div class:hidden={!store.chatIsOpen}>
 		<iframe
 			bind:this={iframe}
-			{src}
+			src={src}
 			frameborder="0"
 			scrolling="no"
 			title="chat widget"
-			style:height
+			style:height={height}
 		></iframe>
 	</div>
 {/if}

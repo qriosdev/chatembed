@@ -5,7 +5,14 @@
 <section>SECTION #1</section>
 <section>SECTION #2</section>
 
-<Widget host="http://localhost:5173" id="95fbf08e-16a1-4ecd-984b-a6b65d5429c3" />
+<Widget 
+	host="http://localhost:5173" 
+	id="3cdf3ab5-60a6-4d63-859b-b6236283acb3"
+	btext="Chat"
+	htext="Welcome"
+	bg="#000000"
+	fg="#ffffff"
+/>
 
 <style>
 	section {

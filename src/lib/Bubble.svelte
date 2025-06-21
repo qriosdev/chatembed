@@ -1,22 +1,22 @@
 <script lang="ts">
-	import { chatIsOpen, bubbleHeight } from './store';
+	import { store } from './store.svelte';
 
-	export let btext = 'Have questions?';
-	export let bg = '#000000';
-	export let fg = '#ffffff';
+	let { btext = 'Have questions?', bg = '#000000', fg = '#ffffff' } = $props();
 
-	$: btnText = $chatIsOpen ? 'Close' : btext;
+	const btnText = $derived(store.chatIsOpen ? 'Close' : btext);
 
 	function handleClick() {
-		$chatIsOpen = !$chatIsOpen;
+		store.chatIsOpen = !store.chatIsOpen;
 	}
 </script>
 
-<div bind:offsetHeight={$bubbleHeight}>
-	<button on:click={handleClick} style:background={bg} style:color={fg} aria-label={btnText}>
-		{btnText}
-	</button>
-</div>
+{#if store.ready}
+<div bind:offsetHeight={store.bubbleHeight}>
+	<button onclick={handleClick} style:background={bg} style:color={fg} aria-label={btnText}>
+			{btnText}
+		</button>
+	</div>
+{/if}
 
 <style>
 	div {
